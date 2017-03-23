@@ -1,8 +1,8 @@
 'use strict';
 
 const RAUNCH_SERVICE = '88f80580-0000-01e6-aace-0002a5d5c51b';
-const RAUNCH_RX_CHAR = '88f80581-0000-01e6-aace-0002a5d5c51b';
-const RAUNCH_TX_CHAR = '88f80582-0000-01e6-aace-0002a5d5c51b';
+const RAUNCH_TX_CHAR = '88f80581-0000-01e6-aace-0002a5d5c51b';
+const RAUNCH_RX_CHAR = '88f80582-0000-01e6-aace-0002a5d5c51b';
 
 function findDevice() {
   return navigator.bluetooth.requestDevice({
