@@ -7,7 +7,7 @@ const RAUNCH_TX_CHAR = '88f80582-0000-01e6-aace-0002a5d5c51b';
 function findDevice() {
   return navigator.bluetooth.requestDevice({
     filters: [{
-      name: "LAUNCH"
+      name: "Launch"
     }],
     optionalServices: [RAUNCH_SERVICE]
 
@@ -33,14 +33,18 @@ class RaunchWebBluetooth {
                          return this._service.getCharacteristic(RAUNCH_TX_CHAR);
                        }).catch(er => { console.log(er); })
       .then(char => { this._tx = char;
-                      return this._service.getCharacteristic(RAUNCH_RX_CHAR);
-                    }).catch(er => { console.log(er); })
-      .then(char => { this._rx = char;
-                      return this._rx.startNotifications().then(_ => {
-                        console.log("connected!");
-                        this._rx.addEventListener('characteristicvaluechanged', e => console.log(new TextDecoder('ASCII').decode(e.target.value)));
-                      });
-                    });
+                      //return this._service.getCharacteristic(RAUNCH_RX_CHAR);
+                    }).catch(er => { console.log(er); });
+      // .then(char => { this._rx = char;
+      //                 return this._rx.startNotifications().then(_ => {
+      //                   console.log("connected!");
+      //                   this._rx.addEventListener('characteristicvaluechanged', e => console.log(new TextDecoder('ASCII').decode(e.target.value)));
+      //                 });
+      //               });
+  }
+
+  update(position, speed) {
+    this._tx.writeValue(new Uint8Array([position, speed]));
   }
 
   close() {

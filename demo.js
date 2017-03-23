@@ -6,16 +6,18 @@ var init = function() {
   var connectBtn = document.getElementById('connect');
   connectBtn.addEventListener('click', function(event) {
     findDevice().then(d => {
-      dev = new RaunchWebBluetooth(d);
+      let dev = new RaunchWebBluetooth(d);
       dev.open();
       devices.push(dev);
     });
   });
 
-  // var slider = document.getElementById('speed');
-  // slider.addEventListener('input', function(event) {
-  //   devices.forEach(dev => {
-  //     dev.vibrate(parseInt(slider.value,10));
-  //   });
-  // });
+  var button = document.getElementById('send');
+  var pos = document.getElementById('position');
+  var speed = document.getElementById('speed');
+  button.addEventListener('click', function(event) {
+    devices.forEach(dev => {
+      dev.update(parseInt(pos.value,10), parseInt(speed.value,10));
+    });
+  });
 };
