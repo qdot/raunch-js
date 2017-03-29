@@ -1,0 +1,27 @@
+{
+  "name": "raunch",
+  "version": "0.0.1",
+  "description": "Node.js and WebBluetooth module for controlling the Fleshlight Launch",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/metafetish/raunch-js.git"
+  },
+  "keywords": [
+    "sextoy",
+    "teledildonics",
+    "fleshlight",
+    "bluetooth",
+    "driver",
+    "hardware"
+  ],
+  "author": "The Metafetish Project",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/metafetish/raunch-js/issues"
+  },
+  "homepage": "https://github.com/metafetish/raunch-js#readme"
+}
