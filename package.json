@@ -4,6 +4,7 @@
   "description": "Node.js and WebBluetooth module for controlling the Fleshlight Launch",
   "main": "index.js",
   "scripts": {
+    "build-webpack": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/metafetish/raunch-js/issues"
   },
-  "homepage": "https://github.com/metafetish/raunch-js#readme"
+  "homepage": "https://github.com/metafetish/raunch-js#readme",
+  "devDependencies": {
+    "webpack": "^2.3.2"
+  }
 }
