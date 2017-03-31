@@ -30,6 +30,8 @@ class RaunchWebBluetooth {
     this._tx = undefined;
     this._rx = undefined;
     this._msg_queue = [];
+    this._stop = false;
+    this._running = false;
   }
 
   open() {
@@ -54,6 +56,25 @@ class RaunchWebBluetooth {
       return;
     }
     this._tx.writeValue(new Uint8Array([bcd(position), bcd(speed)]));
+  }
+
+  stopStroke() {
+    if (this._running === true) {
+      this._stop = true;
+    }
+  }
+
+  runStroke(position) {
+    if (this._stop) {
+      this._stop = false;
+      this._running = false;
+      return;
+    }
+    this._running = true;
+    this.update(position, 99);
+    setTimeout(() => {
+      this.runStroke(position > 0 ? 0 : 99);
+    }, 1000);
   }
 
   close() {
