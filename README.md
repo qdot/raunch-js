@@ -16,15 +16,15 @@ across both node.js and web technologies like WebBluetooth. Depending
 on the platform, it can be used in local node applications, or on
 webpages.
 
-As a node.js library, lovesense-js can be used on the following
-platforms with the toys listed:
+As a node.js library, raunch-js can be used on the following
+platforms:
 
-- Windows - Supports
+- Windows - Supported
   if
   [noble + libusb + bluetooth dongle setup](https://github.com/sandeepmistry/node-bluetooth-hci-socket#windows) is
   used. Support for Windows 10 BLE coming in April 2017 hopefully.
-- macOS - All lovense toys, assuming macOS 10.6+
-- linux - All lovense toys, assuming bluez > 5.42
+- macOS - Supported, assuming macOS 10.6+
+- linux - Supported, assuming bluez > 5.42
 
 As a web library using WebBluetooth, raunch-js can be used on the
 following platforms with the Bluetooth LE based toys listed:
