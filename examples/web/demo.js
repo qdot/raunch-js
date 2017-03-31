@@ -5,7 +5,7 @@ var devices = [];
 var init = function() {
   var connectBtn = document.getElementById('connect');
   connectBtn.addEventListener('click', function(event) {
-    RaunchWebBluetooth.discover().then((device) => {
+    RaunchWebBluetooth.RaunchWebBluetooth.discover().then((device) => {
       devices.push(device);
     });
   });

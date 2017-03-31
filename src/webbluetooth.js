@@ -2,7 +2,7 @@
 
 import * as RaunchProtocolModule from './protocol';
 
-class RaunchWebBluetooth extends RaunchProtocolModule.RaunchProtocol {
+export class RaunchWebBluetooth extends RaunchProtocolModule.RaunchProtocol {
   constructor(device) {
     if (device === undefined) {
       throw new Error('RaunchWebBluetooth requires a bluetooth device!');
@@ -57,5 +57,3 @@ class RaunchWebBluetooth extends RaunchProtocolModule.RaunchProtocol {
     });
   }
 }
-
-export { RaunchWebBluetooth };
