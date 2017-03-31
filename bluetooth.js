@@ -12,7 +12,13 @@ function findDevice() {
     optionalServices: [RAUNCH_SERVICE]
 
   });
-};
+}
+
+
+function bcd(val) {
+  return ((val/10) << 4) | (val%10);
+}
+
 
 class RaunchWebBluetooth {
   constructor(device) {
@@ -44,7 +50,10 @@ class RaunchWebBluetooth {
   }
 
   update(position, speed) {
-    this._tx.writeValue(new Uint8Array([position, speed]));
+    if (position > 99 || speed > 99 || position < 0 || speed < 0) {
+      return;
+    }
+    this._tx.writeValue(new Uint8Array([bcd(position), bcd(speed)]));
   }
 
   close() {
