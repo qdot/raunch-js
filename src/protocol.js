@@ -14,7 +14,8 @@ export class RaunchProtocol extends EventEmitter {
 
   constructor() {
     super();
-    this._buttons = [0,0,0,0,0,0,0];
+    this._buttons = [false,false,false,false,false,false,false];
+    this._idle_buttons = [971, 858, 931, 1012, 945, 873, 976];
   }
 
   sendCommand(position, speed) {
@@ -28,6 +29,18 @@ export class RaunchProtocol extends EventEmitter {
   }
 
   _updateButtonState(buttons) {
+    for (var i = 0; i < buttons.length; ++i) {
+      var diff = this._idle_buttons[i] - buttons[i];
+      // TODO: This threshhold is really finnicky. Find a better way to set it.
+      if (diff > 50 && this._buttons[i] === false) {
+        this._buttons[i] = true;
+        this.emit('buttondown', i);
+      }
+      else if (diff < 50 && this._buttons[i] === true) {
+        this._buttons[i] = false;
+        this.emit('buttonup', i);
+      }
+    }
   }
 
   _write(data) {

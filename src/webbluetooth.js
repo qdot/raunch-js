@@ -27,10 +27,19 @@ export class RaunchWebBluetooth extends RaunchProtocolModule.RaunchProtocol {
       .then(char => { this._rx = char;
                       return this._rx.startNotifications().then(_ => {
                         this._rx.addEventListener('characteristicvaluechanged', e => {
-                          this._updateButtonState(e);
+                          this._parseButtons(e.target.value);
                         });
                       });
                     });
+  }
+
+  _parseButtons(data) {
+    var ints = new Uint16Array(data.byteLength / 2);
+    for (var i = 0; i < ints.length; i++) {
+      // Pull out 16-bit, big endian values
+      ints[i] = data.getUint16(i * 2, false);
+    }
+    this._updateButtonState(ints);
   }
 
   _write(data) {
