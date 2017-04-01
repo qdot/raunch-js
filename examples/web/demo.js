@@ -7,6 +7,14 @@ var init = function() {
   connectBtn.addEventListener('click', function(event) {
     RaunchWebBluetooth.RaunchWebBluetooth.discover().then((device) => {
       devices.push(device);
+      device.on('buttondown', function(e) {
+        let cell = document.getElementById('button' + e.toString());
+        cell.style.backgroundColor = "red";
+      });
+      device.on('buttonup', function(e) {
+        let cell = document.getElementById('button' + e.toString());
+        cell.style.backgroundColor = "white";
+      });
     });
   });
 
@@ -18,6 +26,12 @@ var init = function() {
 
   var running = false;
   var quit = false;
+
+  function markButtonDown() {
+  }
+
+  function markButtonUp() {
+  }
 
   function stopStroke() {
     if (running === true) {
