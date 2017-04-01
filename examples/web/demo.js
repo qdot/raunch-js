@@ -15,19 +15,44 @@ var init = function() {
   var stop = document.getElementById('stop');
   var pos = document.getElementById('position');
   var speed = document.getElementById('speed');
+
+  var running = false;
+  var quit = false;
+
+  function stopStroke() {
+    if (running === true) {
+      quit = true;
+    }
+  }
+
+  function runStroke(position) {
+    if (quit) {
+      quit = false;
+      running = false;
+      return;
+    }
+    running = true;
+    devices.forEach(dev => {
+      dev.sendCommand(position, 99);
+    });
+    setTimeout(() => {
+      runStroke(position > 0 ? 0 : 99);
+    }, 1000);
+  }
+
   button.addEventListener('click', function(event) {
     devices.forEach(dev => {
-      dev.update(parseInt(pos.value,10), parseInt(speed.value,10));
+      dev.sendCommand(parseInt(pos.value,10), parseInt(speed.value,10));
     });
   });
   start.addEventListener('click', function(event) {
     devices.forEach(dev => {
-      dev.runStroke(0);
+      runStroke(0);
     });
   });
   stop.addEventListener('click', function(event) {
     devices.forEach(dev => {
-      dev.stopStroke();
+      stopStroke();
     });
   });
 };
