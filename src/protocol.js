@@ -13,6 +13,7 @@ function bcd(val) {
 export class RaunchProtocol extends EventEmitter {
 
   constructor() {
+    super();
     this._buttons = [0,0,0,0,0,0,0];
   }
 

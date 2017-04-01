@@ -4,9 +4,11 @@ import * as RaunchProtocolModule from './protocol';
 
 export class RaunchWebBluetooth extends RaunchProtocolModule.RaunchProtocol {
   constructor(device) {
+    super();
     if (device === undefined) {
       throw new Error('RaunchWebBluetooth requires a bluetooth device!');
     }
+    this._device = device;
     this._service = undefined;
     this._tx = undefined;
     this._rx = undefined;
@@ -32,7 +34,7 @@ export class RaunchWebBluetooth extends RaunchProtocolModule.RaunchProtocol {
   }
 
   _write(data) {
-    return this._tx.write(data);
+    return this._tx.writeValue(data);
   }
 
   disconnect() {
