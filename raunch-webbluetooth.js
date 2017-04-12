@@ -85,7 +85,10 @@ const RAUNCH_TX_CHAR = '88f80581-0000-01e6-aace-0002a5d5c51b';
 /* harmony export (immutable) */ __webpack_exports__["c"] = RAUNCH_TX_CHAR;
 
 const RAUNCH_RX_CHAR = '88f80582-0000-01e6-aace-0002a5d5c51b';
-/* harmony export (immutable) */ __webpack_exports__["d"] = RAUNCH_RX_CHAR;
+/* harmony export (immutable) */ __webpack_exports__["e"] = RAUNCH_RX_CHAR;
+
+const RAUNCH_CMD_CHAR = '88f80583-0000-01e6-aace-0002a5d5c51b';
+/* harmony export (immutable) */ __webpack_exports__["d"] = RAUNCH_CMD_CHAR;
 
 
 function bcd(val) {
@@ -100,6 +103,10 @@ class RaunchProtocol extends __WEBPACK_IMPORTED_MODULE_0_events___default.a {
     this._idle_buttons = [971, 858, 931, 1012, 945, 873, 976];
   }
 
+  init() {
+    this._write(RAUNCH_CMD_CHAR, new Uint8Array([0x00]));
+  }
+
   sendCommand(position, speed) {
     if (position > 99 || position < 0) {
       return Promise.reject("Position out of bounds");
@@ -107,7 +114,7 @@ class RaunchProtocol extends __WEBPACK_IMPORTED_MODULE_0_events___default.a {
     if (speed > 99 || speed < 0) {
       return Promise.reject("Speed out of bounds");
     }
-    return this._write(new Uint8Array([bcd(position), bcd(speed)]));
+    return this._write(RAUNCH_TX_CHAR, new Uint8Array([position, speed]));
   }
 
   _updateButtonState(buttons) {
@@ -125,7 +132,7 @@ class RaunchProtocol extends __WEBPACK_IMPORTED_MODULE_0_events___default.a {
     }
   }
 
-  _write(data) {
+  _write(char_id, data) {
     throw "Must implement write function!";
   }
 
@@ -479,6 +486,7 @@ class RaunchWebBluetooth extends __WEBPACK_IMPORTED_MODULE_0__protocol__["a" /* 
     this._service = undefined;
     this._tx = undefined;
     this._rx = undefined;
+    this._cmd = undefined;
   }
 
   _connect() {
@@ -489,7 +497,12 @@ class RaunchWebBluetooth extends __WEBPACK_IMPORTED_MODULE_0__protocol__["a" /* 
                          return this._service.getCharacteristic(__WEBPACK_IMPORTED_MODULE_0__protocol__["c" /* RAUNCH_TX_CHAR */]);
                        }).catch(er => { console.log(er); })
       .then(char => { this._tx = char;
-                      return this._service.getCharacteristic(__WEBPACK_IMPORTED_MODULE_0__protocol__["d" /* RAUNCH_RX_CHAR */]);
+                      return this._service.getCharacteristic(__WEBPACK_IMPORTED_MODULE_0__protocol__["d" /* RAUNCH_CMD_CHAR */]);
+                    }).catch(er => { console.log(er); })
+      .then(char => { this._cmd = char;
+                      // Send command version now.
+                      this.init();
+                      return this._service.getCharacteristic(__WEBPACK_IMPORTED_MODULE_0__protocol__["e" /* RAUNCH_RX_CHAR */]);
                     }).catch(er => { console.log(er); })
       .then(char => { this._rx = char;
                       return this._rx.startNotifications().then(_ => {
@@ -509,8 +522,12 @@ class RaunchWebBluetooth extends __WEBPACK_IMPORTED_MODULE_0__protocol__["a" /* 
     this._updateButtonState(ints);
   }
 
-  _write(data) {
-    return this._tx.writeValue(data);
+  _write(char_id, data) {
+    if (char_id == __WEBPACK_IMPORTED_MODULE_0__protocol__["c" /* RAUNCH_TX_CHAR */]) {
+      return this._tx.writeValue(data);
+    } else if (char_id == __WEBPACK_IMPORTED_MODULE_0__protocol__["d" /* RAUNCH_CMD_CHAR */]) {
+      return this._cmd.writeValue(data);
+    }
   }
 
   disconnect() {
