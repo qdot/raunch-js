@@ -12,6 +12,7 @@ export class RaunchWebBluetooth extends RaunchProtocolModule.RaunchProtocol {
     this._service = undefined;
     this._tx = undefined;
     this._rx = undefined;
+    this._cmd = undefined;
   }
 
   _connect() {
@@ -22,6 +23,11 @@ export class RaunchWebBluetooth extends RaunchProtocolModule.RaunchProtocol {
                          return this._service.getCharacteristic(RaunchProtocolModule.RAUNCH_TX_CHAR);
                        }).catch(er => { console.log(er); })
       .then(char => { this._tx = char;
+                      return this._service.getCharacteristic(RaunchProtocolModule.RAUNCH_CMD_CHAR);
+                    }).catch(er => { console.log(er); })
+      .then(char => { this._cmd = char;
+                      // Send command version now.
+                      this.init();
                       return this._service.getCharacteristic(RaunchProtocolModule.RAUNCH_RX_CHAR);
                     }).catch(er => { console.log(er); })
       .then(char => { this._rx = char;
@@ -42,8 +48,12 @@ export class RaunchWebBluetooth extends RaunchProtocolModule.RaunchProtocol {
     this._updateButtonState(ints);
   }
 
-  _write(data) {
-    return this._tx.writeValue(data);
+  _write(char_id, data) {
+    if (char_id == RaunchProtocolModule.RAUNCH_TX_CHAR) {
+      return this._tx.writeValue(data);
+    } else if (char_id == RaunchProtocolModule.RAUNCH_CMD_CHAR) {
+      return this._cmd.writeValue(data);
+    }
   }
 
   disconnect() {

@@ -5,6 +5,7 @@ import EventEmitter from 'events';
 export const RAUNCH_SERVICE = '88f80580-0000-01e6-aace-0002a5d5c51b';
 export const RAUNCH_TX_CHAR = '88f80581-0000-01e6-aace-0002a5d5c51b';
 export const RAUNCH_RX_CHAR = '88f80582-0000-01e6-aace-0002a5d5c51b';
+export const RAUNCH_CMD_CHAR = '88f80583-0000-01e6-aace-0002a5d5c51b';
 
 function bcd(val) {
   return ((val/10) << 4) | (val%10);
@@ -18,6 +19,10 @@ export class RaunchProtocol extends EventEmitter {
     this._idle_buttons = [971, 858, 931, 1012, 945, 873, 976];
   }
 
+  init() {
+    this._write(RAUNCH_CMD_CHAR, new Uint8Array([0x00]));
+  }
+
   sendCommand(position, speed) {
     if (position > 99 || position < 0) {
       return Promise.reject("Position out of bounds");
@@ -25,7 +30,7 @@ export class RaunchProtocol extends EventEmitter {
     if (speed > 99 || speed < 0) {
       return Promise.reject("Speed out of bounds");
     }
-    return this._write(new Uint8Array([bcd(position), bcd(speed)]));
+    return this._write(RAUNCH_TX_CHAR, new Uint8Array([position, speed]));
   }
 
   _updateButtonState(buttons) {
@@ -43,7 +48,7 @@ export class RaunchProtocol extends EventEmitter {
     }
   }
 
-  _write(data) {
+  _write(char_id, data) {
     throw "Must implement write function!";
   }
 
