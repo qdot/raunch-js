@@ -26,8 +26,6 @@ export class RaunchWebBluetooth extends RaunchProtocolModule.RaunchProtocol {
                       return this._service.getCharacteristic(RaunchProtocolModule.RAUNCH_CMD_CHAR);
                     }).catch(er => { console.log(er); })
       .then(char => { this._cmd = char;
-                      // Send command version now.
-                      this.init();
                       return this._service.getCharacteristic(RaunchProtocolModule.RAUNCH_RX_CHAR);
                     }).catch(er => { console.log(er); })
       .then(char => { this._rx = char;
@@ -35,6 +33,10 @@ export class RaunchWebBluetooth extends RaunchProtocolModule.RaunchProtocol {
                         this._rx.addEventListener('characteristicvaluechanged', e => {
                           this._parseButtons(e.target.value);
                         });
+                        // Send command version as last step. After this
+                        // executes successfully, we should have an object
+                        // that is completely set up and ready to work.
+                        return this.init();
                       });
                     });
   }
