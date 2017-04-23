@@ -500,8 +500,6 @@ class RaunchWebBluetooth extends __WEBPACK_IMPORTED_MODULE_0__protocol__["a" /* 
                       return this._service.getCharacteristic(__WEBPACK_IMPORTED_MODULE_0__protocol__["d" /* RAUNCH_CMD_CHAR */]);
                     }).catch(er => { console.log(er); })
       .then(char => { this._cmd = char;
-                      // Send command version now.
-                      this.init();
                       return this._service.getCharacteristic(__WEBPACK_IMPORTED_MODULE_0__protocol__["e" /* RAUNCH_RX_CHAR */]);
                     }).catch(er => { console.log(er); })
       .then(char => { this._rx = char;
@@ -509,6 +507,10 @@ class RaunchWebBluetooth extends __WEBPACK_IMPORTED_MODULE_0__protocol__["a" /* 
                         this._rx.addEventListener('characteristicvaluechanged', e => {
                           this._parseButtons(e.target.value);
                         });
+                        // Send command version as last step. After this
+                        // executes successfully, we should have an object
+                        // that is completely set up and ready to work.
+                        return this.init();
                       });
                     });
   }
