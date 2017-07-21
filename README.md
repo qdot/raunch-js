@@ -29,8 +29,7 @@ platforms:
 As a web library using WebBluetooth, raunch-js can be used on the
 following platforms with the Bluetooth LE based toys listed:
 
-- Windows - No support currently. Waiting for Chrome to have Windows
-  bluetooth support.
+- Windows - Available through the [web-bluetooth-polyfill](https://github.com/urish/web-bluetooth-polyfill) Chrome extension. Waiting for Chrome to have official support.
 - macOS - Supported using Chrome 56+
 - linux - Supported using Chrome 56+ (with experimental web extensions
   turned on) and bluez > 5.42
