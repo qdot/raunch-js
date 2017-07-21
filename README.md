@@ -22,7 +22,7 @@ platforms:
 - Windows - Supported
   if
   [noble + libusb + bluetooth dongle setup](https://github.com/sandeepmistry/node-bluetooth-hci-socket#windows) is
-  used. Support for Windows 10 BLE coming in April 2017 hopefully.
+  used. Support for Windows 10 BLE is available through the [web-bluetooth-polyfill](https://github.com/urish/web-bluetooth-polyfill) Chrome extension.
 - macOS - Supported, assuming macOS 10.6+
 - linux - Supported, assuming bluez > 5.42
 
