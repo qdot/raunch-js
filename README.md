@@ -22,15 +22,14 @@ platforms:
 - Windows - Supported
   if
   [noble + libusb + bluetooth dongle setup](https://github.com/sandeepmistry/node-bluetooth-hci-socket#windows) is
-  used. Support for Windows 10 BLE is available through the [web-bluetooth-polyfill](https://github.com/urish/web-bluetooth-polyfill) Chrome extension.
+  used. Support for Windows 10 BLE coming in April 2017 hopefully.
 - macOS - Supported, assuming macOS 10.6+
 - linux - Supported, assuming bluez > 5.42
 
 As a web library using WebBluetooth, raunch-js can be used on the
 following platforms with the Bluetooth LE based toys listed:
 
-- Windows - No support currently. Waiting for Chrome to have Windows
-  bluetooth support.
+- Windows - Available through the [web-bluetooth-polyfill](https://github.com/urish/web-bluetooth-polyfill) Chrome extension. Waiting for Chrome to have official support.
 - macOS - Supported using Chrome 56+
 - linux - Supported using Chrome 56+ (with experimental web extensions
   turned on) and bluez > 5.42
