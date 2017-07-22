@@ -5,6 +5,7 @@ module.exports = {
   output: {
     filename: 'raunch-webbluetooth.js',
     path: path.resolve(__dirname, 'dist'),
-    library: "RaunchWebBluetooth"
+    library: "RaunchWebBluetooth",
+    libraryTarget: "umd"
   }
 };
