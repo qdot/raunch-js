@@ -1,4 +1,8 @@
-# raunch-js
+# raunch-js - DEPRECATED
+
+**DEPRECATED** - All controls work now happening at
+[buttplug.io](https://buttplug.io). For protocol information, see
+[STPIHKAL](https://stpihkal.docs.buttplug.io).
 
 [![Patreon donate button](https://img.shields.io/badge/patreon-donate-yellow.svg)](https://www.patreon.com/qdot)
 
@@ -29,7 +33,8 @@ platforms:
 As a web library using WebBluetooth, raunch-js can be used on the
 following platforms with the Bluetooth LE based toys listed:
 
-- Windows - Available through the [web-bluetooth-polyfill](https://github.com/urish/web-bluetooth-polyfill) Chrome extension. Waiting for Chrome to have official support.
+- Windows - No support currently. Waiting for Chrome to have Windows
+  bluetooth support.
 - macOS - Supported using Chrome 56+
 - linux - Supported using Chrome 56+ (with experimental web extensions
   turned on) and bluez > 5.42
